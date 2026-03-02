@@ -120,6 +120,11 @@ export class InventoryService {
       filteredItems = filteredItems.filter(item => item.desc.toLowerCase().indexOf(filters.desc) !== -1);
     }
 
+    if (filters.location) {
+      filters.location = filters.location.toLowerCase();
+      filteredItems = filteredItems.filter(item => item.location.toLowerCase().indexOf(filters.location) !== -1);
+    }
+
     if (filters.type) {
       filters.type = filters.type.toLowerCase();
       filteredItems = filteredItems.filter(item => item.type.toLowerCase().indexOf(filters.type) !== -1);
