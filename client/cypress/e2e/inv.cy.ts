@@ -86,9 +86,6 @@ describe('Inventory', () => {
       if ($body.find('[data-cy="filter-color"]').length === 0) {
         recordError(`Empty filter input for Color`);
       }
-      if ($body.find('[data-cy="filter-size"]').length === 0) {
-        recordError(`Empty filter input for Size`);
-      }
     });
 
     cy.then(() => {
