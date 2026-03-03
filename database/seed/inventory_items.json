@@ -3,7 +3,7 @@
     "_id": {
       "$oid": "588935f57546a2daea44de7c"
     },
-    "name": "Yellow Pencils 12-Pack ",
+    "name": "Yellow Pencils 12-Pack",
     "type": "pencil",
     "desc":"Yellow #2 Ticonderoga pencils, sharpened, comes in packs of 12",
     "location":"Tote #1",
@@ -23,7 +23,7 @@
     "_id": {
       "$oid": "588935f51c55b55c75a84848"
     },
-    "name": "Erasers 6-Pack ",
+    "name": "Erasers 6-Pack",
     "type": "eraser",
     "desc":"2-inch pink erasers, comes in packs of 6",
     "location":"Tote #42",
@@ -33,7 +33,7 @@
     "_id": {
       "$oid": "58af3a600343927e48e87212"
     },
-    "name": "Colored Pencils 16-Pack ",
+    "name": "Colored Pencils 16-Pack",
     "type": "colored_pencil",
     "desc":"Crayola colored pencils, sharpened. Comes in packs of 16.",
     "location":"Tote #3",

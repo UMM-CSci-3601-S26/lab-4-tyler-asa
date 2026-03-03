@@ -147,4 +147,10 @@ export class InventoryService {
     // `res.id` should be the MongoDB ID of the newly added `User`.
     return this.httpClient.post<{id: string}>(this.inventoryUrl, newItem).pipe(map(response => response.id));
   }
+
+  deleteItem(id: string): Observable<InventoryItem> {
+    // The input to get could also be written as (this.userUrl + '/' + id)
+    return this.httpClient.delete<InventoryItem>(`${this.inventoryUrl}/${id}`);
+    //return this.httpClient.get<InventoryItem>(`${this.inventoryUrl}/${id}`);
+  }
 }
