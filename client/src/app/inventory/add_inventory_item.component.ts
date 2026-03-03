@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -10,18 +10,28 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 //import { UserRole } from './user';
 import { InventoryService } from './inventory.service';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-add-inventory-item',
   templateUrl: './add_inventory_item.component.html',
   styleUrls: ['./add_inventory_item.component.scss'],
-  imports: [FormsModule, ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, MatButtonModule]
+  imports: [FormsModule, ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, MatButtonModule, MatAutocompleteModule]
 })
 export class AddItemComponent {
   private inventoryService = inject(InventoryService);
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
 
+  typeInput = signal<string>('');
+
+  filteredTypeOptions = computed(() => {
+    const input = (this.typeInput() || '').toLowerCase();
+    if (!input) return this.inventoryService.typeOptions;
+    return this.inventoryService.typeOptions.filter(option =>
+      option.label.toLowerCase().includes(input) || option.value.toLowerCase().includes(input)
+    );
+  });
 
   addInventoryForm = new FormGroup({
     // We allow alphanumeric input and limit the length for name.
