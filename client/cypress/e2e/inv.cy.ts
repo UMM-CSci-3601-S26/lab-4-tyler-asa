@@ -60,6 +60,43 @@ describe('Inventory', () => {
     cy.get('@headers').should('contain', 'Quantity');
     cy.get('@headers').should('contain', 'Notes');
   });
+
+  // Cypress tests to ensure the filter boxes are there
+  // for all specification fields
+
+  it('should have specification filters', () => {
+    page.getSidenavButton().click();
+    page.getNavLink('Inventory').click();
+    cy.url().should('match', /\/inventory$/);
+
+    const errors: string[] = [];
+
+    const recordError = (message: string) => {
+      errors.push(message);
+      cy.log(message);
+      console.warn(message);
+    }
+    cy.get('body').then(($body) => {
+      if ($body.find('[data-cy="filter-item"]').length === 0) {
+        recordError(`Empty filter input for Item`);
+      }
+      if ($body.find('[data-cy="filter-brand"]').length === 0) {
+        recordError(`Empty filter input for Brand`);
+      }
+      if ($body.find('[data-cy="filter-color"]').length === 0) {
+        recordError(`Empty filter input for Color`);
+      }
+      if ($body.find('[data-cy="filter-size"]').length === 0) {
+        recordError(`Empty filter input for Size`);
+      }
+    });
+
+    cy.then(() => {
+      if (errors.length > 0) {
+        throw new Error(errors.join('\n'));
+      }
+    });
+  });
   // it('should report all empty cells across all pages', () => {
   //   page.getSidenavButton().click();
   //   page.getNavLink('Inventory').click();
