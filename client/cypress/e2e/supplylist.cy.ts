@@ -9,6 +9,10 @@ const page = new SupplyListPage();
 // }
 
 describe('Supply List', () => {
+  before(() => {
+    cy.task('seed:database');
+  });
+
   beforeEach(() => page.navigateTo());
 
   it('Should have the correct title', () => {

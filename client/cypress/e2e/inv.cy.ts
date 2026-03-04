@@ -11,6 +11,10 @@ const Filters_Test = {
 }
 
 describe('Inventory', () => {
+  before(() => {
+    cy.task('seed:database');
+  });
+
   beforeEach(() => {
     // Intercept the API call before navigating
     cy.intercept('GET', '/api/inventory*').as('getInventory');
