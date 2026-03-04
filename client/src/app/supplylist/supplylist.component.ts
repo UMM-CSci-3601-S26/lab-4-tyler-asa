@@ -60,7 +60,7 @@ export class SupplyListComponent {
       this.dataSource.data = this.serverFilteredSupplyList();
     });
   }
-  _id = signal<string | undefined>(undefined);
+
   school = signal<string | undefined>(undefined);
   grade = signal<string | undefined>(undefined);
   item = signal<string | undefined>(undefined);
@@ -101,3 +101,5 @@ export class SupplyListComponent {
     { initialValue: [] }
   );
 }
+export { SupplyListService };
+

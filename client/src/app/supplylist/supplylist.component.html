@@ -81,7 +81,7 @@
   <p>Count: {{ serverFilteredSupplyList().length }}</p>
 
   <mat-list role="Display Items">
-    @for (element of serverFilteredSupplyList(); track element._id) {
+    @for (element of serverFilteredSupplyList(); track $index) {
       <mat-list-item role="Display Items">
         <div class = "list-style">
           <div class="field"><strong>School:</strong> {{ element.school}} </div>
