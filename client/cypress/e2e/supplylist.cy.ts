@@ -118,4 +118,3 @@ describe('Supply List', () => {
 function nextTick(ms: number) {
   cy.wait(ms);
 }
-

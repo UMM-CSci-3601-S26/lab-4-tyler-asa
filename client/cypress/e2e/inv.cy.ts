@@ -39,7 +39,7 @@ describe('Inventory', () => {
     // Note: Once 'test item' gets removed, this needs to be updated (possibly update to not check the first?)
   });
 
-  it('should have pagination controls', () => {
+  it('Should have pagination controls', () => {
     page.getSidenavButton().click();
     page.getNavLink('Inventory').click();
     cy.url().should('match', /\/inventory$/);
