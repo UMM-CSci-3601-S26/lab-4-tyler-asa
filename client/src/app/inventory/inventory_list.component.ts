@@ -164,7 +164,20 @@ export class InventoryListComponent {
   }
 
   resetLocations() {
-    //Delete each item, and add a copy with the location data removed.
-
+    const tempItem: InventoryItem = {
+      _id:undefined,
+      location:"N/A",
+      stocked:undefined,
+      name:undefined,
+      type:undefined,
+      desc:undefined
+    }
+    this.inventoryService.modifyMass(tempItem,this.filteredItems());
+    //TODO, We need to update something, such that the page doesn't need manual reloading...
+    this.snackBar.open(
+      `Locations reset. Please reload this page to see your changes. `,
+      'OK',
+      { duration: 6000 }
+    );
   }
 }
