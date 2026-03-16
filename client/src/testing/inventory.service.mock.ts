@@ -12,8 +12,7 @@ import { InventoryService } from 'src/app/inventory/inventory.service';
 @Injectable({
   providedIn: AppComponent
 })
-export class MockInventoryService implements Pick<InventoryService, 'getItems' | 'filterItems' | 'addItem' | 'deleteItem'| 'updateSavedSearch' > {
-  //'getUsers' | 'getUserById' | 'addUser' | 'filterUsers'
+export class MockInventoryService implements Pick<InventoryService, 'getItems' | 'filterItems' | 'addItem' | 'deleteItem'| 'updateSavedSearch'| 'modifyMass'> {
   savedInventoryName = ''; //Per-session saved value for name search bar.
   savedInventoryLocation = ''; //Per-session saved value for location search bar.
   savedInventoryStocked = 0; //Per-session saved value for stocked search bar.
@@ -107,6 +106,10 @@ export class MockInventoryService implements Pick<InventoryService, 'getItems' |
     // Send post request to add a new item with the item data as the body.
     // `res.id` should be the MongoDB ID of the newly added `Item`.
     return of(MockInventoryService.emptyItem);
+  }
+
+  modifyMass(newProps:InventoryItem,oldItems:InventoryItem[]) {
+    //Doesn't return anything; just modifies database.
   }
 
   filterItems(items: InventoryItem[], filters: {
