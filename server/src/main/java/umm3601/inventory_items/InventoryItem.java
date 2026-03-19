@@ -33,7 +33,6 @@ public class InventoryItem {
   public String desc;
   public String location;
   public int stocked;
-
   @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof InventoryItem)) {

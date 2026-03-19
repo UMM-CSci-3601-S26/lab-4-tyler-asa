@@ -313,4 +313,86 @@ class InventoryItemControllerSpec {
 
     assertTrue(exceptionMessage.contains("This is not a number!"));
   }
+
+  @Test
+  void updateInventoryQuantityWorks() {
+    String id = testItemId1.toString();
+    when(ctx.pathParam("id")).thenReturn(id);
+
+    String body = """
+      { "stocked": 42 }
+    """;
+
+    when(ctx.bodyValidator(QuantityUpdate.class))
+      .thenReturn(new BodyValidator<>(
+        body,
+        QuantityUpdate.class,
+        () -> javalinJackson.fromJsonString(body, QuantityUpdate.class)
+      ));
+
+    inventoryItemController.updateInventoryQuantity(ctx);
+
+    verify(ctx).status(HttpStatus.OK);
+
+    Document updated = testDatabase.getCollection("inventory_items")
+      .find(eq("_id", new ObjectId(id))).first();
+
+    assertEquals(42, updated.get("stocked"));
+  }
+
+   @Test
+  void updateInventoryQuantityNegativeFails() {
+    String id = testItemId1.toString();
+    when(ctx.pathParam("id")).thenReturn(id);
+
+    String body = """
+      { "stocked": -5 }
+    """;
+
+    when(ctx.bodyValidator(QuantityUpdate.class))
+      .thenReturn(new BodyValidator<>(
+        body,
+        QuantityUpdate.class,
+        () -> javalinJackson.fromJsonString(body, QuantityUpdate.class)
+      ));
+
+    ValidationException exception =
+      assertThrows(ValidationException.class, () -> {
+        inventoryItemController.updateInventoryQuantity(ctx);
+      });
+
+    assertTrue(
+      exception.getErrors()
+        .get("REQUEST_BODY")
+        .get(0)
+        .toString()
+        .contains("Stocked must be >= 0")
+    );
+  }
+
+  @Test
+  void updateInventoryQuantityNotFound() {
+
+    String fakeId = new ObjectId().toString();
+    when(ctx.pathParam("id")).thenReturn(fakeId);
+
+    String body = """
+      { "stocked": 10 }
+    """;
+
+    when(ctx.bodyValidator(QuantityUpdate.class))
+      .thenReturn(new BodyValidator<>(
+        body,
+        QuantityUpdate.class,
+        () -> javalinJackson.fromJsonString(body, QuantityUpdate.class)
+      ));
+
+    NotFoundResponse exception =
+      assertThrows(NotFoundResponse.class, () -> {
+        inventoryItemController.updateInventoryQuantity(ctx);
+      });
+
+    assertEquals("Inventory item not found", exception.getMessage());
+  }
+
 }
