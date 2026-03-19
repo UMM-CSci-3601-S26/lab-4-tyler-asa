@@ -299,5 +299,23 @@ public class InventoryItemController implements Controller {
 
     // Delete the specified item
      server.delete(API_INVENTORY_BY_ID, this::deleteItem);
+     server.put(API_INVENTORY_BY_ID, this::updateInventoryQuantity);
+  }
+
+  public void updateInventoryQuantity(Context ctx) {
+    String id = ctx.pathParam("id");
+    QuantityUpdate update = ctx.bodyValidator(QuantityUpdate.class)
+      .check(stocked -> stocked.getStocked() >= 0,
+        "Stocked must be >= 0")
+      .get();
+    InventoryItem existing = inventoryCollection.findOneById(id);
+
+    if (existing == null) {
+      throw new NotFoundResponse("Inventory item not found");
+    }
+
+    existing.stocked = update.getStocked();
+    inventoryCollection.replaceOneById(id, existing);
+    ctx.status(HttpStatus.OK);
   }
 }
