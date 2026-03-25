@@ -210,7 +210,7 @@ export class InventoryService {
   }
 
   updateQuantity(id: string, stocked: number): Observable<void> {
-    return this.httpClient.put<void>(`${this.inventoryUrl}/${id}`, { Stocked: stocked });
+    return this.httpClient.put<void>(`${this.inventoryUrl}/${id}`, { stocked: stocked });
   }
 
   modifyMass(newProps:InventoryItem,oldItems:InventoryItem[]) {
