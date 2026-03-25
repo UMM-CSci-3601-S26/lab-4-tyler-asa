@@ -209,6 +209,10 @@ export class InventoryService {
     return this.httpClient.delete<InventoryItem>(`${this.inventoryUrl}/${id}`);
   }
 
+  updateQuantity(id: string, stocked: number): Observable<void> {
+    return this.httpClient.put<void>(`${this.inventoryUrl}/${id}`, { stocked: stocked });
+  }
+
   modifyMass(newProps:InventoryItem,oldItems:InventoryItem[]) {
     //We first need to copy the items into a new array. oldItems is connected to a signal or something.
     //Redoing the whole database is not a great way to do this. For now we're doing it anyways.

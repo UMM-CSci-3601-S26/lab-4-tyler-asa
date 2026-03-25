@@ -180,4 +180,13 @@ export class InventoryListComponent {
       { duration: 6000 }
     );
   }
+  reload(): void {
+    window.location.reload()
+  }
+
+  updateQuantity(id: string, stocked: number) {
+    this.inventoryService.updateQuantity(id, stocked).subscribe(() => {
+      this.reload();
+    });
+  }
 }
